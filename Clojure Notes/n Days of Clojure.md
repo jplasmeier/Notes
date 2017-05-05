@@ -32,4 +32,10 @@ I spent some time messing around with the idea from day 2 to write a replacement
 
 If this is even possible, I think it would make the most sense to spend some more time familiarizing myself with Clojure in general before attempting to solve a problem without knowing what tools I have at my disposal.
 
+## day 5: 05/04/2017
 
+After a lengthy hiatus my free time is now in order again. I have decided to start over with reading [Clojure for the Brave and True](http://www.braveclojure.com/). I will continue to take notes and post them on Github. I'm going over the Emacs setup and key bindings as a refresher. 
+
+## day 6: 05/05/2017
+
+I'm resuming at the Emacs chapter. I have decided to not use Paredit until I'm more comfortable with Emacs. Next up is "Do Things: A Clojure Crash Course!" 

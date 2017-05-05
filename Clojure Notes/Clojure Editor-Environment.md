@@ -6,6 +6,7 @@
 
 |Keys	|Description|
 |------|-----------|
+|C-g   | Cancel current action |
 |C-x k | Kill current buffer|
 |C-x b | Switch buffers. Type to create the name of a new buffer|
 |C-x C-f| Open a file. Type to create a new file|
@@ -39,6 +40,8 @@
 |M-g g	|Go to line.|
 
 ### Killing and Yanking Text
+
+The kill ring is a place where regions of text go after being killed. The kill ring is similar to where text would go after being `cut` but can store multiple blocks. You can also add things to the kill ring without killing them, similar to `copy`.
 
 |Keys|	Description|
 |----|------------|
