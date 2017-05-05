@@ -39,3 +39,5 @@ After a lengthy hiatus my free time is now in order again. I have decided to sta
 ## day 6: 05/05/2017
 
 I'm resuming at the Emacs chapter. I have decided to not use Paredit until I'm more comfortable with Emacs. Next up is "Do Things: A Clojure Crash Course!" 
+
+I went through the types and data structures. Next up is reviewing functions. This is slow going since I'm familiar with Scheme and remember most of these things. 
