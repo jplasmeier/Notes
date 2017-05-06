@@ -1,5 +1,7 @@
 # Clojure Functions
 
+Clojure functions are first-class citizens, that is, they can be passed like data into other functions (higher-order functions). 
+
 ### Basics
 
 Five parts of a function declaration:
@@ -11,6 +13,19 @@ docstring  				; optional
 [list of parameters]	; input parameters as a list
 (body of "function"))	; the actual function body
 ```
+
+### Special Forms & Macro Calls
+
+Lowkey these are things that look like functions but are not. That is, one can expressions with these terms, but they are not functions. `If` is an example of a special form:
+
+```
+(if (condition)
+  (then-form)
+  (else-form))
+```
+
+because calling `if` does not evaluate all of its arguments as a function would. You can't pass special forms as parameters. 
+
 
 ### Arity Overloading
 
@@ -194,4 +209,55 @@ Functions can return functions, which are closures and include all the variables
 (inc3 7)
 ; => 10
 ```
+
+### Pulling It All Together
+
+```
+(defn matching-part
+  [part]
+  {:name (clojure.string/replace (:name part) #"^left-" "right-")
+   :size (:size part)})
+
+(defn symmetrize-body-parts
+  "Expects a seq of maps that have a :name and :size"
+  [asym-body-parts]
+  (loop [remaining-asym-parts asym-body-parts
+         final-body-parts []]
+    (if (empty? remaining-asym-parts)
+      final-body-parts
+      (let [[part & remaining] remaining-asym-parts]
+        (recur remaining
+               (into final-body-parts
+                     (set [part (matching-part part)])))))))
+```
+
+There's a lot going on here.
+
+#### let
+
+The `let` expression binds values to identifiers, just like it does in Scheme. The wrinkle here is that the rest parameter `&` is used in the `let` form. In this case, `part` is bound to the first value in `remaining-asym-parts` and `remaining` is bound to the rest of the values in `remiaining-asym-parts`. 
+
+#### into
+
+The `into` function is a combination of `map` and `conj`. More specifically, in this case, `set` is called to create a Clojure set out of the vector containing `part` and the value resulting from `(matching-part part)`. This is done to ensure that no duplicates are added into `final-body-parts` because Clojure sets do not allow duplicates, and `matching-part` may return a duplicate. 
+
+I suppose this is a fairly popular idiom- one can construct a vector without fear of duplicates by using `(into [] (set (foo)))` where `(foo)` is some form that may return duplicate values.
+
+#### loop
+
+The `loop` form allows for iteration. It can act as a target for `recur`. The bindings in the `loop` expressions are names bound to an initial value. Then, code in the body, often with `recur`, can operate on these values. 
+
+```
+; A loop that sums the numbers 10 + 9 + 8 + ...
+
+; Set initial values count (cnt) from 10 and down
+(loop [sum 0 cnt 10]
+    ; If count reaches 0 then exit the loop and return sum
+    (if (= cnt 0)
+    sum
+    ; Otherwise add count to sum, decrease count and 
+    ; use recur to feed the new values back into the loop
+    (recur (+ cnt sum) (dec cnt))))
+```
+
 
