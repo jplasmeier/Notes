@@ -260,4 +260,48 @@ The `loop` form allows for iteration. It can act as a target for `recur`. The bi
     (recur (+ cnt sum) (dec cnt))))
 ```
 
+#### reduce
+
+`reduce` is a Clojure function that applies a function to a sequence by applying the function to an inital value (if given) or first/second element and applies the result to each successive element. Examples are more clear:
+
+```
+(reduce + [1 2 3 4])
+; => 10
+(reduce + 10 [1 2 3 4])
+; => 20
+```
+
+While we think of `reduce` as taking a list and returning a single element, there's actually no restriction on the return type of `reduce`- it could be a sequence containg more elements than before.
+
+### Refactoring Symmetrizer
+
+Old:
+
+```
+(defn symmetrize-body-parts
+  "Expects a seq of maps that have a :name and :size"
+  [asym-body-parts]
+  (loop [remaining-asym-parts asym-body-parts
+         final-body-parts []]
+    (if (empty? remaining-asym-parts)
+      final-body-parts
+      (let [[part & remaining] remaining-asym-parts]
+        (recur remaining
+               (into final-body-parts
+                     (set [part (matching-part part)])))))))
+```
+
+New:
+
+```
+(defn better-symmetrize-body-parts
+  "Expects a seq of maps that have a :name and :size"
+  [asym-body-parts]
+  (reduce (fn [final-body-parts part]
+            (into final-body-parts (set [part (matching-part part)])))
+          []
+          asym-body-parts))
+```
+
+Now, instead of mucking about `loop` and `recur` we use `reduce` to apply an anonymous function to the vector of parts. The anonymous function maps and conj's (via `into`) the result from `matching-part` helper into the result.
 

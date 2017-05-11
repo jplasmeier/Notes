@@ -46,5 +46,6 @@ I went through the types and data structures. Next up is reviewing functions. Th
 
 Back to the grind of the basics. I read over my previous notes on functions and started getting into some of the features like `let`, `loop` and `recur`. 
 
-## day 8: 05/07/2017
+## day 8: 05/10/2017
 
+After a brief haitus due to finals, I'm back on Clojure, looking at the Hobbit symmetry example from Brave Clojure in more detail. I finished the "Do Things" chapter!  
