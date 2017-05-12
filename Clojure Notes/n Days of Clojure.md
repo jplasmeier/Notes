@@ -48,4 +48,30 @@ Back to the grind of the basics. I read over my previous notes on functions and 
 
 ## day 8: 05/10/2017
 
-After a brief haitus due to finals, I'm back on Clojure, looking at the Hobbit symmetry example from Brave Clojure in more detail. I finished the "Do Things" chapter!  
+After a brief haitus due to finals, I'm back on Clojure, looking at the Hobbit symmetry example from Brave Clojure in more detail. I finished the "Do Things" chapter! 
+
+## day 9: 05/12/2017
+
+The topic _du jour_ is core functions like `map` and `reduce` and so forth. Once I wrap my head around the details of these, I think I will be ready to start practicing writing functions.   
+
+I took a detour to modify the examples into something new. The function `funcmap` takes a list of function names, a list of functions, and a sequence. The output is a map where the keys are function names the values are the result of applying the corresponding function to the sequence:
+
+```
+(funcmap [sum avg count] ["sum" "avg" "count"] [1 2 3 4 5])
+; => {"sum" 15, "avg" 3, "count" 5}
+```
+
+Implementation:
+
+```
+(defn keymap
+	[name func nums]
+	[name (func nums)])
+	
+(defn funcmap
+	[names funcs nums]
+	(into {} (map #(keymap %1 %2 nums) names funcs)))
+```
+
+There might be a better way to do this, but it's not bad.
+
