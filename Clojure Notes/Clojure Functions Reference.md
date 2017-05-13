@@ -31,3 +31,30 @@ function body)	; the actual function body
 * reduce
 * into (map + conj)
 
+### List of Functions
+
+#### Control Flow
+
+* let
+* loop
+* recur
+* if
+* while
+* do
+
+#### Sequences
+
+* map
+* reduce
+* take
+* take-while
+* drop
+* drop-while
+* filter
+* some
+* sort
+* sort-by
+
+#### Collections
+
+* into

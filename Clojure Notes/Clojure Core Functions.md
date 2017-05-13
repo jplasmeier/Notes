@@ -1,6 +1,6 @@
 # Clojure Core Functions
 
-### Abstract Data Structures
+## Abstract Data Structures
 
 Clojure supports data structures as abstractly as possible. 
 
@@ -64,7 +64,7 @@ In terms of seq, Clojure converts lists/maps/vectors/sets to seqs by calling the
 ; => ([:name "Bill Compton"] [:occupation "Dead mopey guy"])
 ```
 
-### Functions on Sequences
+## Functions on Sequences
 
 #### map
 
@@ -97,3 +97,212 @@ You can also map over functions:
 (stats [80 1 44 13 6])
 ; => (144 5 144/5)
 ```
+
+#### reduce
+
+Reduce processes each element in a sequence to build a response. An example is filtering a map:
+
+```
+(reduce (fn [new-map [key val]]
+          (if (> val 4)
+            (assoc new-map key val)
+            new-map))
+        {}
+        {:human 4.1
+         :critter 3.9})
+; => {:human 4.1}
+```
+
+One could implement `map` using `reduce`.
+
+#### take, drop
+
+Both `take` and `drop` take a sequence and a number `n`. `take` returns the first `n` elements; `drop` returns the sequence following the first `n` elements:
+
+```
+(take 3 [1 2 3 4 5 6 7 8 9 10])
+; => (1 2 3)
+
+(drop 3 [1 2 3 4 5 6 7 8 9 10])
+; => (4 5 6 7 8 9 10)
+``` 
+
+##### take-while, drop-while
+
+The above functions are cases of more general functions: `take-while` and `drop-while`. These functions return values that meet a given predicate function:
+
+```
+(def food-journal
+  [{:month 1 :day 1 :human 5.3 :critter 2.3}
+   {:month 1 :day 2 :human 5.1 :critter 2.0}
+   {:month 2 :day 1 :human 4.9 :critter 2.1}
+   {:month 2 :day 2 :human 5.0 :critter 2.5}
+   {:month 3 :day 1 :human 4.2 :critter 3.3}
+   {:month 3 :day 2 :human 4.0 :critter 3.8}
+   {:month 4 :day 1 :human 3.7 :critter 3.9}
+   {:month 4 :day 2 :human 3.7 :critter 3.6}])
+
+; returns elements until the function returns false
+(take-while #(< (:month %) 3) food-journal)
+; => ({:month 1 :day 1 :human 5.3 :critter 2.3}
+      {:month 1 :day 2 :human 5.1 :critter 2.0}
+      {:month 2 :day 1 :human 4.9 :critter 2.1}
+      {:month 2 :day 2 :human 5.0 :critter 2.5})
+
+; returns elements until the function returns true
+(drop-while #(< (:month %) 3) food-journal)
+; => ({:month 3 :day 1 :human 4.2 :critter 3.3}
+      {:month 3 :day 2 :human 4.0 :critter 3.8}
+      {:month 4 :day 1 :human 3.7 :critter 3.9}
+      {:month 4 :day 2 :human 3.7 :critter 3.6})
+```
+
+#### filter, some
+
+`filter` returns all elements of a sequence that satisfy a given predicate function. 
+
+```
+(filter #(< (:human %) 5) food-journal)
+; => ({:month 2 :day 1 :human 4.9 :critter 2.1}
+      {:month 3 :day 1 :human 4.2 :critter 3.3}
+      {:month 3 :day 2 :human 4.0 :critter 3.8}
+      {:month 4 :day 1 :human 3.7 :critter 3.9}
+      {:month 4 :day 2 :human 3.7 :critter 3.6})
+```
+
+Unlike `take` and `drop`, `filter` will always iterate over all elements in the sequence, which may be undesirable. 
+
+`some` returns the first truthy value matching a given predicate function, or `nil` if none is found. 
+
+```
+(some #(> (:critter %) 5) food-journal)
+; => nil
+
+(some #(> (:critter %) 3) food-journal)
+; => true
+```
+
+#### sort, sort-by
+
+`sort` does what you would expect. `sort-by` is a keyed sort which takes in a function as well as the sequence to sort:
+
+```
+(sort [3 1 2])
+; => (1 2 3)
+
+(sort-by count ["aaa" "c" "bb"])
+; => ("c" "bb" "aaa")
+```
+
+#### concat
+
+`concat` takes two sequences and returns a new one containing the elements of the first concatenated to the first element of the rest:
+
+```
+(concat [1 2] [3 4])
+; => (1 2 3 4)
+```
+
+### Lazy Seqs
+
+Many of these functions return lazy sequences in the which the values are not evaluated until the values are needed. 
+
+```
+(def vampire-database
+  {0 {:makes-blood-puns? false, :has-pulse? true  :name "McFishwich"}
+   1 {:makes-blood-puns? false, :has-pulse? true  :name "McMackson"}
+   2 {:makes-blood-puns? true,  :has-pulse? false :name "Damon Salvatore"}
+   3 {:makes-blood-puns? true,  :has-pulse? true  :name "Mickey Mouse"}})
+
+(defn vampire-related-details
+  [social-security-number]
+  (Thread/sleep 1000)
+  (get vampire-database social-security-number))
+
+(defn vampire?
+  [record]
+  (and (:makes-blood-puns? record)
+       (not (:has-pulse? record))
+       record))
+
+(defn identify-vampire
+  [social-security-numbers]
+  (first (filter vampire?
+                 (map vampire-related-details social-security-numbers))))
+```
+
+This code lazily creates a map of vampire details and social security numbers and filters it on the `vampire?` predicate function. 
+
+#### time
+
+Wrapping functions in a `(time fn)` call will return the elapsed time of running the inner function. In the above example, the function `(time (vampire-related-details 0))` takes just over 1000 msces, because `map` does not actually have to apply `vampire-related-details` to each social security number. 
+
+#### infinite sequences
+
+You can create lazy-sequences of infinite length using `repeatedly`. In this function, `(take 3 (repeatedly (fn [] (rand-int 10))))
+; => (1 4 0)`, 3 could be any integer and the sequence returned would be of the same length. 
+
+The `lazy-seq` keyword may be necessary to return a lazy sequence:
+
+```
+(defn even-numbers
+  ([] (even-numbers 0))
+  ([n] (cons n (lazy-seq (even-numbers (+ n 2))))))
+
+(take 10 (even-numbers))
+; => (0 2 4 6 8 10 12 14 16 18)
+```
+
+## Functions on Collections
+
+If functions on sequences act on the elements of the sequence, then functions on collections act on the collection itself. 
+
+#### into
+
+Into has a number of uses. One of them is that it allows you to return data in a specific data structure (besides seq):
+
+```
+(map identity {:sunlight-reaction "Glitter!"})
+; => ([:sunlight-reaction "Glitter!"])
+
+(into {} (map identity {:sunlight-reaction "Glitter!"}))
+; => {:sunlight-reaction "Glitter!"}
+
+(map identity [:garlic :sesame-oil :fried-eggs])
+; => (:garlic :sesame-oil :fried-eggs)
+
+(into [] (map identity [:garlic :sesame-oil :fried-eggs]))
+; => [:garlic :sesame-oil :fried-eggs]
+```
+
+One can also provide a non-empty argument as an initial value:
+
+```
+(into {:favorite-emotion "gloomy"} [[:sunlight-reaction "Glitter!"]])
+; => {:favorite-emotion "gloomy" :sunlight-reaction "Glitter!"}
+
+(into ["cherry"] '("pine" "spruce"))
+; => ["cherry" "pine" "spruce"]
+```
+
+#### conj
+
+`conj` is the Clojure version of lisp's `cons`, Though Clojure has `cons` for lists, `conj` works (differently) on each data structure. On vectors, `conj` adds the (entire) second argument to the end of the vector:
+
+```
+(conj [1 2 3] [4])
+; => [1 2 3 [4]]
+
+(into [1 2 3] [4])
+; => [1 2 3 4]
+
+(conj [1 2 3] "four")
+; => [1 2 3 "four"]
+
+(into [1 2 3] "four")
+; => [1 2 3 \f \o \u \r]
+```
+
+`conj` and `into` are similar and often, functions are defined on rest parameters (`conj`) or on a seq (`into`).
+
+## Function on Functions 
