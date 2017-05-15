@@ -33,7 +33,7 @@ function body)	; the actual function body
 
 ### List of Functions
 
-#### Control Flow
+#### Control Flow/Execution
 
 * let
 * loop
@@ -58,3 +58,10 @@ function body)	; the actual function body
 #### Collections
 
 * into
+* conj
+
+#### Functions
+
+* apply
+* partial
+* complement

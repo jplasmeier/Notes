@@ -78,3 +78,7 @@ There might be a better way to do this, but it's not bad.
 ## day 10: 05/13/2017
 
 Today brings more notes on the core functions of Clojure. I worked through the rest of the section on Sequence Functions and Collection Functions. Next up are Function Functions!
+
+## day 11: 05/15/2017
+
+I decided to split up notes and examples. 

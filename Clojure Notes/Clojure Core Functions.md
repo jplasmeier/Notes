@@ -100,7 +100,16 @@ You can also map over functions:
 
 #### reduce
 
-Reduce processes each element in a sequence to build a response. An example is filtering a map:
+`reduce` is a Clojure function that applies a function to a sequence by applying the function to an inital value (if given) or first/second element and applies the result to each successive element. 
+
+```
+(reduce + [1 2 3 4])
+; => 10
+(reduce + 10 [1 2 3 4])
+; => 20
+```
+
+While we think of `reduce` as taking a list and returning a single element, there's actually no restriction on the return type of `reduce`- it could be a sequence containg more elements than before. An example is filtering a map:
 
 ```
 (reduce (fn [new-map [key val]]
@@ -306,3 +315,70 @@ One can also provide a non-empty argument as an initial value:
 `conj` and `into` are similar and often, functions are defined on rest parameters (`conj`) or on a seq (`into`).
 
 ## Function on Functions 
+
+Functions are first-class citizens and can be passed into other functions to create higher-order functions with ease. 
+
+### apply
+
+The `apply` function "explodes" a seq into arguments:
+
+```
+(max 1 2 3)
+; => 3
+
+(max [1 2 3])
+; => [1 2 3]
+
+(apply max [1 2 3])
+; => 3
+``` 
+
+### partial
+
+The `partial` function takes a function `bar` and any number of arguments `args-bar`, and returns a function `foo`. This function `foo` can take more arguments `args-foo`. Calling `foo` applies the original function `bar` to `args-bar` then applies `bar` to `args-foo`:
+
+```
+(def add10 (partial + 10))
+(add10 3)
+; => 13
+(add10 5)
+; => 15
+
+(def add-missing-elements
+  (partial conj ["air" "water" "earth"]))
+  
+(add-missing-elements "fire" "ether")
+; => ["air" "water" "earth" "fire" "ether"]
+```
+
+A more practical example:
+
+```
+(defn lousy-logger
+	[log-level message]
+	(condp = log-level
+		:warn (clojure.string/lower-case message)
+		:alert (clojure.string/upper-case message)))
+
+(def warn (partial lousy-logger :warn))
+
+(warn "Red light ahead")
+; => "red light ahead"
+```
+
+### complement
+
+The `complement` function takes a boolean function and returns a function that is the complement of the given function:
+
+```
+(defn identify-humans
+	[social-security-numbers]
+	(filter #(not (vampire?))
+		(map vampire-related-details social-security-numbers)))
+
+(def not-vampire? (complement vampire?))
+(defn identify-humans
+	[social-security-numbers]
+	(filer not-vampire?
+		(map vampire-related-details social-security-numbers)))
+``` 
