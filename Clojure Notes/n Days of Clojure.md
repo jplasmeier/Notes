@@ -81,4 +81,14 @@ Today brings more notes on the core functions of Clojure. I worked through the r
 
 ## day 11: 05/15/2017
 
-I decided to split up notes and examples. 
+I decided to split up notes and examples. I finished the content of the Core Functions chapter in Brave Clojure and will be completing the example project next. 
+
+## day 12: 05/16/2017
+
+I spent some time reading the later chapters on concurrency and atoms/refs/etc. while on a bus, but I'm not really counting it since I didn't take notes or write code.
+
+## day 13: 05/17/2017
+
+I completed the vampire analysis example and a couple of the exercises. I definitely spent too much time confusing basic ways to process data before realizing that a simple `map` call was sufficient. In the future, I'll remember to start with the basic functions before introducing complexity in my solution. 
+
+

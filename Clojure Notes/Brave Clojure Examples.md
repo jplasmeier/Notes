@@ -36,3 +36,22 @@ Now, instead of mucking about `loop` and `recur` we use `reduce` to apply an ano
 
 ## Chapter 4: Core Functions
 
+### Vampire Analysis Program
+
+Exercises: 
+
+Return a list of names:
+
+```
+(defn find-vampire-names
+	[records]
+	(map #(get % :name) records))
+```
+
+Append another suspect:
+
+```
+(defn append-suspect                                                                                                    
+	[suspect-name suspect-glitter-index suspects]                                             
+	(conj suspects {:name suspect-name :glitter-index suspect-glitter-index}))
+```

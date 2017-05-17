@@ -65,3 +65,7 @@ function body)	; the actual function body
 * apply
 * partial
 * complement
+
+#### File I/O
+
+* slurp
