@@ -91,4 +91,8 @@ I spent some time reading the later chapters on concurrency and atoms/refs/etc. 
 
 I completed the vampire analysis example and a couple of the exercises. I definitely spent too much time confusing basic ways to process data before realizing that a simple `map` call was sufficient. In the future, I'll remember to start with the basic functions before introducing complexity in my solution. 
 
+## day 14: 05/18/2017
+
+I'm going to start the chapter on "Functional Programming" which should be a breeze since I just learned a lot about functional programming in my Programming Languages Course that I just finished.
+
 

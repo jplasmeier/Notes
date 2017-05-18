@@ -2,6 +2,8 @@
 
 In chronological order rather than evergreen
 
+## Lesson 1
+
 ### Symmetric Cryptosystems
 
 plaintext:
@@ -132,3 +134,64 @@ A machine generates a key sequence based on its configuration. The key is XOR'd 
 Configuration was synchronized in secret (symmetric encryption). 
 
 If you intercept two similar ciphertext messages, you can XOR them together and get information about the key. 
+
+## Lesson 2
+
+Applications of symmetric ciphers.
+
+### Randomness
+
+What's random? Tough question.
+
+What isn't random? A repeating pattern isn't. A sequence with a bounded number of repeating elements isn't. 
+
+“Anyone attempting to produce random numbers by purely arithmetic means is, of course, in a state of sin." - von Neumann
+
+#### Kolmogorov Complexity
+
+The Kolmogorov complexity of a sequence S is the length of the shortest possible description of S. For a sequence to be random, we say that `s` is random if `K(s) = |s| + C`. That is, if the Kolmogorov complexity is at least as high as the length of the sequence, plus a constant term. 
+
+For example, if a short program can compute the entire sequence, it cannot be random. 
+
+However, Kolmogorov Complexity is not computable.
+
+#### Statistical Tests
+
+One can show how non-random a sequence is using statistics.
+
+#### Generation Method
+
+Ultimately, the best way to satisfy randomness is to show that the following property holds:
+
+For a sequence `s = x0x1x2..., xi in [0, 2^n-1]`, if an attacker knows `x0x1...xm-1`, they must only be able to guess the value of `xm` with probability `P = 1/2^n`
+
+#### Physically Random Events
+
+* Quantum Mechanics
+* Thermal Noise
+* User actions (key presses, mouse movements)
+
+### PRNGs
+
+Pseudo Random Number Generators take a randomly generated seed and produce a longer sequence of (mostly random) bits based on the seed.
+
+### Modes of Operation
+
+#### Electronic Codebook Mode
+
+One to one mapping between input and output. Does not hide repetition. Vulnerable to scrambling. 
+
+#### Cipher Block Chaining (CBC)
+
+Each message block is encrypted with the key XOR'd with the output of the previous block. For the first block, an initialization vector is XOR'd with the first message block.
+
+#### Counter Mode (CTR)
+
+For each block, first encrypt the value of a counter appended to a nonce (one-time use random value). For a 128 bit cipher one could use a 64 bit nonce and a 64 bit counter, concatenated. Then encrypt and XOR the output with the message block.  
+
+Note that CTR can be parallelized and CBC mode cannot because it is dependent on the previous block. One could even precompute the outputs of the encrypted blocks before the message is known using CTR mode. 
+
+#### Cipher Feedback Mode (CFB)
+
+CFB is sort of a hybrid between CTR and CBC. Part of the previous input to the encryption function is concatenated with part of the resulting ciphertext block. The message is XOR'd with the portion of the output that will be sent to the next block's encryption function. 
+
