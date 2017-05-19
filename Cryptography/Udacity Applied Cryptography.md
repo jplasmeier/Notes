@@ -266,3 +266,6 @@ Password reuse exposes attacks from shoulder surfing, keyloggers, and other mean
 Compute the hash of a hash of a ... of a secret. The server stores the result of the last value n. The user will login with the n-1th hashed secret. The next time, the user will send in that n-1th value. The server hashes that value again and checks that they are equal. 
 
 This is also known as the S/Key system. However, it is not terribly practical. 
+
+## Lesson 3
+
