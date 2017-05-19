@@ -93,6 +93,8 @@ I completed the vampire analysis example and a couple of the exercises. I defini
 
 ## day 14: 05/18/2017
 
-I'm going to start the chapter on "Functional Programming" which should be a breeze since I just learned a lot about functional programming in my Programming Languages Course that I just finished.
+I'm going to start the chapter on "Functional Programming" which should be a breeze since I just learned a lot about functional programming in my Programming Languages Course that I just finished. I finished the chapter but only by skimming the sections on the Peg game. 
 
+## day 15: 05/19/2017
 
+Rather than simply glossing over the peg game, I'm going to implement my own copy by manually copying code over. This will at least expose my conscious attention to the code, which will be better than a mere glossing over. I implemented the functions up to and including `connect`. 

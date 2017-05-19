@@ -59,6 +59,8 @@ function body)	; the actual function body
 
 * into
 * conj
+* get-in
+* assoc-in
 
 #### Functions
 
