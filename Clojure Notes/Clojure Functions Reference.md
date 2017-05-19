@@ -66,7 +66,7 @@ function body)	; the actual function body
 * partial
 * complement
 * comp
-* 
+* memoize
 
 #### File I/O
 

@@ -195,3 +195,74 @@ Note that CTR can be parallelized and CBC mode cannot because it is dependent on
 
 CFB is sort of a hybrid between CTR and CBC. Part of the previous input to the encryption function is concatenated with part of the resulting ciphertext block. The message is XOR'd with the portion of the output that will be sent to the next block's encryption function. 
 
+### Protocols
+
+A precisely defined sequence of steps (computation or communication) or procedure with two or more participants. 
+
+Cryptographic protocols involve keeping secrets secure. 
+
+### Padding
+
+If you have a 128 bit block cipher and want to encrypt fewer than 128 bits, you need to account for this somehow. We do this by padding the input with extra 0s. 
+
+### Cryptographic Hash Functions
+
+A function that maps from a (infinitely) large domain to a small fixed output, ideally well-distributed across the domain.
+
+Additionally, we need the following properties:
+
+* pre-image resistance
+	* Given h = H(x), it's hard to find x.
+* weak collision resistance
+	* Given h = H(x), it's hard to find any x' such that H(x') = h.
+* strong collision resistance
+	* Hard to find any pair x and y such that H(x) = H(y).
+
+### Random Oracle
+
+An ideal cryptographic hash function such that H(x) -> h gives a uniform distribution.
+
+However, it is not possible because it is deterministic and cannot add randomness to the output.
+
+In practice, we can get close. 
+
+#### Probability of Guessing
+
+P(one guess H(x') = H) = 2^(-b)
+P(guess is bad) = 1 - 2^-b
+
+where b is the number of output bits
+
+Strong collision resistance requires at least twice as many output bits of the hash function. A weak collision would need ~N guesses, a strong collision would need N^(-1/2) guesses. 
+
+SHA-1 used 160 bits, but one can find a collision with 2^31 guesses.
+
+SHA-2 uses 256 or 512 bits but this can be compromised. 
+
+### Storing Passwords
+
+Obviously don't store passwords in plaintext. 
+
+But don't just encrypt the passwords either. If the key is compromised, all passwords are known. Also, you can determine the length of the password, and whether or not two users have the same password. 
+
+#### Early Unix Implementation
+
+Encrypt 0 with the password as the key several (25) times. 
+
+However, DES used only 52 bit keys and they were always ASCII characters. Additionally, dictionary attacks make it easy to pre-compute a list of 25-times encrypted 0 ciphertext.
+
+### Salted Password Scheme
+
+Each user gets n=12 random bits. The password is stored as the hash of the salt concatenated with the password. Even if the passwords are the same, the results will be different due to the salt. 
+
+Adding salt makes it not much more difficult to break the password if the password file has been compromised. But, it does make dictionary attacks much less effective. 
+
+### Password Reuse
+
+Password reuse exposes attacks from shoulder surfing, keyloggers, and other means of picking up someone's password. 
+
+### Hash Chain
+
+Compute the hash of a hash of a ... of a secret. The server stores the result of the last value n. The user will login with the n-1th hashed secret. The next time, the user will send in that n-1th value. The server hashes that value again and checks that they are equal. 
+
+This is also known as the S/Key system. However, it is not terribly practical. 
