@@ -98,3 +98,16 @@ I'm going to start the chapter on "Functional Programming" which should be a bre
 ## day 15: 05/19/2017
 
 Rather than simply glossing over the peg game, I'm going to implement my own copy by manually copying code over. This will at least expose my conscious attention to the code, which will be better than a mere glossing over. I implemented the functions up to and including `connect`. 
+
+## day 16: 05/22/2017
+
+I'm continuing to go over the peg game. In some cases, for example the `connect-down-right` function, I will just read about what the function does and do my best to implement it myself. Given the unfamiliar (even compared to Scheme, as I've used Scheme) syntax, it has been tantamount to design first, code second. 
+
+I'm picking up on some common patterns in these functions: 
+
+* heavy use of `let` to bind names to variables 
+* reduce with an anonymous function
+* nested maps with `assoc-in`
+
+I had a 5 hour long flight, so I managed to get almost all the way through! I just need to write the main function and make sure everything actually works. Going through this closely was definitely the right move- I understand when to use which functions better, and if nothing else, have built muscle memory for writing Clojure code. 
+

@@ -382,3 +382,7 @@ The `complement` function takes a boolean function and returns a function that i
 	(filer not-vampire?
 		(map vampire-related-details social-security-numbers)))
 ``` 
+
+### comp
+
+The `comp` function composes a function around an inner function. 
