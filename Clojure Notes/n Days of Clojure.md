@@ -111,3 +111,8 @@ I'm picking up on some common patterns in these functions:
 
 I had a 5 hour long flight, so I managed to get almost all the way through! I just need to write the main function and make sure everything actually works. Going through this closely was definitely the right move- I understand when to use which functions better, and if nothing else, have built muscle memory for writing Clojure code. 
 
+## day 17: 05/27/2017
+
+After a brief hiatus to settle in at my internship, I have some time to continue on in Brave Clojure. Today, I will start Chapter 6: Organizing Your Project: A Librarian’s Tale. It's all about project organization which isn't the most intersting topic, but one of the most rewarding to spend time on getting right. 
+
+I finished the first section on namespaces. Next up is "Real Project Organization."

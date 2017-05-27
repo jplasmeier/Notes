@@ -238,5 +238,11 @@ This is accomplished by filtering into a map. The filter predicate takes a vecto
 
 So, for a position, if there are connections such that the neighbor is pegged and the destination is empty, then that connection yields a valid move. 
 
-#### Rendering the Board
+### Errata
 
+Errors in the Peg Game example include:
+
+* the section on ansi-styles, ansi, and colorize is missing
+* also the defn of characters-as-strings
+* and its out of order
+* and there's no main
