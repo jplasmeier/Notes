@@ -116,3 +116,7 @@ I had a 5 hour long flight, so I managed to get almost all the way through! I ju
 After a brief hiatus to settle in at my internship, I have some time to continue on in Brave Clojure. Today, I will start Chapter 6: Organizing Your Project: A Librarian’s Tale. It's all about project organization which isn't the most intersting topic, but one of the most rewarding to spend time on getting right. 
 
 I finished the first section on namespaces. Next up is "Real Project Organization."
+
+## day 18: 05/29/2017
+
+I finished taking notes on Project Organization. There's an example at the end of the chapter, "To Catch a Burglar" which I will start on next time. 

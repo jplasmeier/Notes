@@ -107,3 +107,45 @@ You can make functions private, that is, visible only within the current namespa
 One can set an alias, that is, a shorter name for namespaces and use that alias to call the namespace instead of the fully qualified symbol.
 
 ## Real Project Organization
+
+The default namespace is an instance of a one to one mapping between namespace and file path. In a `lein new app` project, `src` is the root. Underscores become dashes and directory slashes become dots:
+
+`the-divine-cheese-code.core -> src/the_divine_cheese_code/core.clj`
+
+### require
+
+The `require` function takes the identifier of a namespace, and reads and evaluates that file. This defines its functions within that namespace.
+
+### refer
+
+To introduce the contents of a namespace into the current namespace, user `refer`. 
+
+### use
+
+The `use` function does both `require` and `refer` at once, but it's frowned upon to use this code in production. 
+
+### ns
+
+The oft-used `ns` is actually a macro. When you call `ns`, you:
+
+* Refer the `clojure.core` namespace 
+* Call `in-ns` to create and use a namespace
+* Takes "references" which can be used to automatically call `require` on given namespaces
+* Don't have to use a quote before the identifier of a namespace
+* Implicity create an alias with `:as`
+
+For example:
+
+```
+(ns the-divine-cheese-code.core
+  (:require [the-divine-cheese-code.visualization.svg :as svg]
+            [clojure.java.browse :as browse]))
+```
+
+One can also call `refer` within a `:require` reference:
+
+```
+(ns the-divine-cheese-code.core
+  (:require [the-divine-cheese-code.visualization.svg :refer :all]))
+```
+
