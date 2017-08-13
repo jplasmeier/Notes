@@ -246,3 +246,7 @@ Errors in the Peg Game example include:
 * also the defn of characters-as-strings
 * and its out of order
 * and there's no main
+
+## Chapter 6: Project Organization
+
+### 

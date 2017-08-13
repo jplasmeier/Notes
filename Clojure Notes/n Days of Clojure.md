@@ -120,3 +120,7 @@ I finished the first section on namespaces. Next up is "Real Project Organizatio
 ## day 18: 05/29/2017
 
 I finished taking notes on Project Organization. There's an example at the end of the chapter, "To Catch a Burglar" which I will start on next time. 
+
+## day 19: 06/11/2017
+
+It's been awhile. I'm staring a project written in Clojure currently called Zoia. It's an API for retreiving music from Google Drive for a music streaming client-side web application. However, before I continue I'm going to do the aforementioned example project from Brave Clojure. 
